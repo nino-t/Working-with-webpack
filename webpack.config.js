@@ -7,10 +7,14 @@ module.exports = {
 		filename: "bundle.js",
 		path: path.join(__dirname, 'public')
 	},
+	devServer: {
+		contentBase: path.join(__dirname, 'public'),
+		port: 8080
+	},
 	module: {
 		rules: [
 			{
-				test: /.js$/,
+				test: /\.js$/,
 				exclude: /(node_modules)/,
 				use: {
 					loader: "babel-loader",
@@ -18,7 +22,29 @@ module.exports = {
 						presets: ["env", "stage-0", "react"]
 					}
 				}
-			}
+			},
+			{
+				test: /\.css$/,
+				use: [
+					{loader: "style-loader"},
+					{loader: "css-loader"}
+				]
+			},
+			{
+				test: /\.scss$/,
+				use: [
+					{loader: "style-loader"},
+					{loader: "css-loader"},
+					{loader: "sass-loader"}
+				]
+			},
+			{
+				test: /\.jpg$/,
+				use: [
+					{loader: "url-loader"},
+					{loader: "file-loader"}
+				]
+			}						
 		]
 	}
 }
